@@ -1,0 +1,18 @@
+#!/bin/ksh
+
+pcrcalc 'ClimZones.map = lookupnominal(ElevZonesClass.txt, ../Spatial/DEM.map)'
+
+pcrcalc 'isohyet.map = ../Spatial/unit.map'
+
+./asc2c Tavg.txt Tavg.bin
+./asc2c Tmin.txt Tmin.bin
+./asc2c Tmax.txt Tmax.bin
+./asc2c Precip.txt Precip.bin
+./asc2c Sdown.txt Sdown.bin
+./asc2c Ldown.txt Ldown.bin
+./asc2c RH.txt RH.bin
+./asc2c Windspeed.txt windspeed.bin
+./asc2c d2H.txt d2H.bin
+./asc2c d18O.txt d18O.bin
+
+

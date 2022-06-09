@@ -1,0 +1,19 @@
+The original version writes PCR maps for each map output variable and at each time step, which could considerably increase computing load for handling huge amount of output files during I/O process. 
+With the flexible netCDF format, those map outputs can be easily handled and processed for external scripts. There are four .nc files can be generated, integrating four output categories, 
+i.e., Water (Water_Fluxes_States.nc), Tracer Deuterium (D_Fluxes_States.nc), tracer Oxygen-18 (O18_Fluxes_States.nc), Water age (Age_Fluxes_States.nc) and Vegetation dynamics (VegDyn_Fluxes_States.nc). 
+This document gives brief instructions of configurations and code modifications to enable the netCDF format of the map outputs.
+1.	Configurations
+(1)	Download and install the netCDF-C++4 library (should be directly available in e.g., Ubuntu repositories).
+(2)	Add the library (e.g., “-lnetcdf_c++4”) to ./Release-Linux/objects.mk for compiling.
+(3)	Add a switch in the configuration file config.ini:  “NetCDF_output_format”:
+  a.	./includes/InitConf.h:  bool sw_netcdf; 
+  b.	./Control/ReadConfigFile.cpp, GenerateConfigTemplate.cpp
+(4)	No additional changes needed for specifying the output variables. If activated (NetCDF_output_format = 1), map output will be in the .nc format, with the same name for each output variable [three dimensions: LAT, LON, TIME]; otherwise, keep the original PCR maps.
+2.	Source code
+(1)	Newly added files:
+  a.	./wrappers/Report2nc.cpp, similar as Report2maps.cpp
+  b.	./Report/ReportnetCDF.cpp, including two functions Report::CreatOutputNC and Report::UpdateOutputNC
+(2)	Modified files:
+  a.	./Constructors/BasinConstruct.cpp: get basic geographic information (e.g., latitude, longitude, resolution, nodata, etc.) as explicit public information for nc format
+  b.	./includes/Sativa.h, Basin.h, Report.h
+  c.	./ech2o.cpp	

@@ -1,0 +1,111 @@
+echo
+echo \#\#\# Basic site geometry \#\#\#
+echo
+
+echo \#\#\# Convert DEM from .asc to .map
+asc2map -a --clone base.map dem.asc DEM.map
+
+echo \#\#\# Create slope map from DEM map
+pcrcalc 'slope.map = slope(DEM.map)'
+
+echo \#\#\# Delineate channel network
+pcrcalc 'ldd.map = lddcreate(DEM.map, 1e9,1e9,1e9,1e9)'
+
+echo \#\#\# Channel mask \(from asc file\)
+asc2map -a --clone base.map chanmask.asc chanmask.map
+echo \#\#\# Channel width \(from asc file\)
+asc2map -a --clone base.map chanwidth.asc chanwidth.map
+echo \#\#\# Channel\'s Manning coeffcient \(from asc file\)
+asc2map -a --clone base.map chanmanningn.asc chanmanningn.map
+
+echo \#\#\# Unit map
+pcrcalc 'unit.map = DEM.map/DEM.map'
+
+echo
+echo \#\#\# Geophysics \#\#\#
+echo
+echo \#\#\# Albedo
+pcrcalc 'albedo.map = unit.map * 0.3'
+
+echo \#\#\# Emissivity
+pcrcalc 'emissivity.map = unit.map * 0.98'
+
+echo \#\#\# Soil heat capacity
+pcrcalc 'soilheatcap.map = unit.map * 2.205e6'
+
+echo \#\#\# Soil thermal conductivity
+pcrcalc 'soilthermalK.map = unit.map * 0.2'
+
+echo \#\#\# Soil depth with negligible heat exchange
+pcrcalc 'dampdepth.map = unit.map * 2'
+
+echo \#\#\# Initial soil temperature
+pcrcalc 'temp_damp.map = unit.map * 10'
+
+echo \#\#\# Snowmelt coefficient
+pcrcalc 'snowmeltCoeff.map = unit.map * 4.1e-8'
+
+echo \#\#\# Terrain rugosity
+pcrcalc 'randrough.map = unit.map * 0.05'
+
+echo \#\#\# Soil air entry pressure
+pcrcalc 'psi_ae.map = unit.map * 0.2'
+
+echo \#\#\# Brooks and Corey lambda
+pcrcalc 'BClambda.map = unit.map * 5.3'
+
+echo \#\#\# V-to-H hydraulic conductivity ratio
+pcrcalc 'KvKh.map = unit.map * 0.4'
+
+echo \#\#\# Residual soil moisture
+pcrcalc 'theta_r.map = unit.map * 0.05'
+
+echo \#\#\# Other soil parameters
+pcrcalc 'Wc.map = unit.map * 0.7'
+pcrcalc 'Wp.map = unit.map * 9'
+
+echo \#\#\# Topography index
+pcrcalc "topind.map = ln(accuflux(ldd.map,$srf)/slope.map)"
+
+echo \#\#\# Soil depth
+pcrcalc 'depth_soil.map = topind.map/areaaverage(topind.map,nominal(unit.map))'
+
+echo \#\#\# Effective hydraulic conductivity
+pcrcalc 'Ksat0.map = 1 / (depth_soil.map * 36000)'
+
+echo \#\#\# Effective hydraulic conductivity
+pcrcalc 'kKsat.map = 0.15 * unit.map'
+
+echo \#\#\# Porosity
+pcrcalc 'poros0.map = 1 / (1 + exp(0.01 * topind.map))'
+
+echo \#\#\# Porosity
+pcrcalc 'kporos.map = 2 * unit.map'
+
+echo \#\#\# Snow water equivalent
+pcrcalc 'swe.map = unit.map * 0'
+
+echo \#\#\# Initial soil moisture \in the three layers
+#pcrcalc 'Soil_moisture_1.map = poros.map * 0.5'
+#pcrcalc 'Soil_moisture_2.map = poros.map * 0.5'
+#pcrcalc 'Soil_moisture_3.map = poros.map * 0.5'
+pcrcalc 'Soil_moisture_1.map = (mapmaximum(DEM.map)-DEM.map)/(mapmaximum(DEM.map)-mapminimum(DEM.map))*(0.7*poros.map-2*theta_r.map)+2*theta_r.map'
+pcrcalc 'Soil_moisture_2.map = Soil_moisture_1.map'
+pcrcalc 'Soil_moisture_3.map = Soil_moisture_1.map'
+
+echo \#\#\# Initial soil temperature
+pcrcalc 'soiltemp.map = unit.map * 10'
+
+echo \#\#\# Initial soil temperature
+pcrcalc 'streamflow.map = unit.map * 0'
+
+echo \#\#\# Depth of first two soil hydraulic layers
+echo \(third is deduced from the total soil depth\)
+pcrcalc 'depth_soilL1.map = unit.map * 0.1'
+pcrcalc 'depth_soilL2.map = unit.map * 0.1'
+
+echo \#\#\# Exponential root profile
+pcrcalc 'Kroot.map = unit.map * 5'
+
+echo \#\#\# Leakance through bedrock
+pcrcalc 'leakance.map = unit.map * 0.0'
