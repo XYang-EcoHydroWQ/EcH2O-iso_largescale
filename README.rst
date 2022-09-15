@@ -39,11 +39,10 @@ How to Cite
 -----------
 Please, acknowledge the use of this version of |ech2o|-iso by citing
 
-- Yang, X., Tetzlaff, D., Müller, C., Knöller, K., Soulsby, C., & Borchardt, D. (2022). Upscaling Tracer-aided Ecohydrological Modeling to Larger Catchments: Implications for Process Representation and Heterogeneity in Landscape Organization (Under review)
+- Yang, X., Tetzlaff, D., Müller, C., Knöller, K., Borchardt, D., & Soulsby, C.(2022). Upscaling Tracer-aided Ecohydrological Modeling to Larger Catchments: Implications for Process Representation and Heterogeneity in Landscape Organization (Under review)
 - Yang, X., Tetzlaff, D., Soulsby, C., Smith, A., & Borchardt, D. (2021). Catchment functioning under prolonged drought stress: tracer-aided ecohydrological modeling in an intensively managed agricultural catchment. Water Resources Research, 57, e2020WR029094. https://doi.org/10.1029/2020WR029094
-- Maneta, M and Silverman, N (2013). A spatially-distributed model to simulate water, energy and vegetation dynamics using information from regional climate models. Earth Interactions, 17, 1-44.
 - Kuppel, S., Tetzlaff, D., Maneta, M. P., and Soulsby, C. (2018). |ech2o|-iso 1.0: Water isotopes and age tracking in a process-based, distributed ecohydrological model, Geosci. Model Dev., 11, 3045-3069, `<https://doi.org/10.5194/gmd-11-3045-2018>`_.
-
+- Maneta, M and Silverman, N (2013). A spatially-distributed model to simulate water, energy and vegetation dynamics using information from regional climate models. Earth Interactions, 17, 1-44.
 
 
 Licensing
