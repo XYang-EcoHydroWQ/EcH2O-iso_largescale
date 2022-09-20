@@ -236,7 +236,7 @@ Basin::Basin(Control &ctrl)
     //_FluxGWtoL2 = NULL;
     //_FluxGWtoL3 = NULL;
 		
-    if(ctrl.sw_trck){
+    //if(ctrl.sw_trck){
       _FluxCnptoSrf = new grid(*_DEM); // canopy/sky to surface
       _FluxCnptoSnow = new grid(*_DEM); // canopy/sky to snowpac
       _FluxSnowtoSrf = new grid(*_DEM); // snowpack to surface
@@ -256,7 +256,7 @@ Basin::Basin(Control &ctrl)
 	_fracMW2 = new grid(*_DEM);
 	_fracMW12 = new grid(*_DEM);
       }
-    }
+    //}
 
 	//for extra GW yangx 2020-05
 	_ExtraGW = NULL;
