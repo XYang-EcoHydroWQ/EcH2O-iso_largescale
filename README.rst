@@ -1,6 +1,6 @@
 .. |ech2o| replace:: EcH\ :sub:`2`\ O
 
-|ech2o|-iso 3.0
+|ech2o|-iso 3.1
 ===============
 
 |ech2o|-iso builds on the **physically-based, spatially distributed ecohydrologic model EcH**\ :sub:`2`\ **O** developed in C++ in the Regional Hydrology Lab at the University of Montana (Maneta and Silverman, 2013) (`link <http://hs.umt.edu/RegionalHydrologyLab/software/default.php>`_).
@@ -15,7 +15,7 @@ Evaporative fractionation of isotopes is also included.
 
    **Figure 1.** Water compartments and fluxes as represented in |ech2o| and used for isotope and age tracking in |ech2o|-iso. Note that the Deeper groundwater storage is newly added by Yang et al., 2021 WRR  
 
-Main modifications for larger scale modeling 
+Main modifications for larger scale modeling (v3.1)
 ------------------
 
 - An input map of areal proportion of each modeling cell was added, given that the boundary cells might not be fully covered by the catchment domain.
